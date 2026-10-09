@@ -1,116 +1,32 @@
-# SQL DDL Commands – Table Creation and Modification
+# SQL DML Commands – Insert, Update, and Delete
 
 ## 📌 Description
-This lab focuses on SQL Data Definition Language (DDL) commands used to create, modify, rename, and delete database tables and columns.
 
-I performed practical SQL tasks on the `students` table, including adding a new column, removing a column, renaming columns and tables, changing data types, inserting a new row, updating existing records, truncating a table, and dropping a table.
+This lab focuses on **Data Manipulation Language (DML)** commands in SQL, which are used to insert new records, update existing records, and delete specific records from database tables.
+
+In this practical task, I worked with a student database using the `students` table. I practised inserting a new student record, updating a student's city, deleting records based on marks, and handling `NULL` values in the email column. I also used the `SELECT` statement to verify the changes made to the table.
 
 ## 🎯 Objectives
-- Understand SQL DDL commands.
-- Create and modify database tables.
-- Add and remove columns.
-- Rename columns and tables.
-- Change column data types.
-- Understand the difference between `TRUNCATE` and `DROP`.
-- Practise SQL commands using a sample student database.
+
+- Understand the purpose and usage of SQL DML commands.
+- Insert new records into a database table using `INSERT`.
+- Modify existing records using `UPDATE`.
+- Delete specific records using `DELETE`.
+- Handle missing or unavailable values using `NULL`.
+- Apply conditions using the `WHERE` clause.
+- Retrieve and verify records after performing data manipulation operations.
 
 ## 🛠️ Tools Used
-- MySQL
-- SQL Editor
 
-## 📋 Tasks Performed
+- **Database:** MySQL
+- **Language:** SQL
+- **Commands Practised:** INSERT, UPDATE, DELETE, SELECT
 
-### Setup: Create the Students Table
+## 📚 Tasks Performed
 
-Created a `students` table with the following columns:
-- `student_id` – INT, Primary Key
-- `student_name` – VARCHAR(50)
-- `city` – VARCHAR(30)
-- `course` – VARCHAR(40)
-- `marks` – INT
+### 1. INSERT Command – Adding a New Record
 
-```sql
-CREATE TABLE students (
-    student_id INT PRIMARY KEY,
-    student_name VARCHAR(50),
-    city VARCHAR(30),
-    course VARCHAR(40),
-    marks INT
-);
-```
-
-Inserted the initial five student records.
-
-```sql
-INSERT INTO students
-    (student_id, student_name, city, course, marks)
-VALUES
-    (101, 'Asha', 'Pune', 'Data Analytics', 78),
-    (102, 'Ravi', 'Mumbai', 'Data Science', 35),
-    (103, 'Meena', 'Chennai', 'Data Analytics', 88),
-    (104, 'Karan', 'Delhi', 'Excel', 29),
-    (105, 'Sara', 'Pune', 'Data Science', 91);
-```
-
-### Task 1: Add a New Column
-
-**Requirement:** Add an `email` column to the `students` table.
-
-```sql
-ALTER TABLE students
-ADD COLUMN email VARCHAR(50);
-```
-
-**Outcome:** Added the `email` column to store students' email addresses. Existing records have `NULL` values in this column unless a default value is specified.
-
-### Task 2: Remove a Column
-
-**Requirement:** Remove the `city` column.
-
-```sql
-ALTER TABLE students
-DROP COLUMN city;
-```
-
-**Outcome:** Removed the `city` column and its associated data from the table.
-
-### Task 3: Rename a Column
-
-**Requirement:** Rename `marks` to `score`.
-
-```sql
-ALTER TABLE students
-RENAME COLUMN marks TO score;
-```
-
-**Outcome:** Changed the column name from `marks` to `score` without deleting the existing values.
-
-### Task 4: Change the Data Type
-
-**Requirement:** Change the data type of `marks` from `INT` to `DECIMAL(5,2)`.
-
-```sql
-ALTER TABLE students
-MODIFY COLUMN marks DECIMAL(5,2);
-```
-
-**Outcome:** Changed the data type to support decimal values, such as `78.50`.
-
-**Note:** Perform this task before renaming `marks` to `score`, or modify `score` instead if the column has already been renamed.
-
-### Task 5: Rename the Table
-
-**Requirement:** Rename the `students` table to `learners`.
-
-```sql
-RENAME TABLE students TO learners;
-```
-
-**Outcome:** Changed the table name from `students` to `learners`, retaining the table's existing structure and records.
-
-### Task 6: Insert a New Row
-
-**Requirement:** Insert student 106 into the `students` table.
+**Task:** Insert a new student record with student ID 106.
 
 ```sql
 INSERT INTO students
@@ -119,11 +35,34 @@ VALUES
     (106, 'Vikram', 'Nagpur', 'Excel', 67);
 ```
 
-**Outcome:** Inserted a new student record with ID 106.
+**Explanation:**
+- `INSERT INTO` specifies the table where the record will be added.
+- The column names identify the fields in which the values will be stored.
+- `VALUES` specifies the data for the new student.
 
-### Task 7: Update a Student's City
+**Outcome:** Added a new record for student 106, with the name Vikram, city Nagpur, course Excel, and marks 67.
 
-**Requirement:** Change the city of student 103 from Chennai to Hyderabad.
+### 2. Handling NULL Values
+
+**Task:** Insert a student record with no email address.
+
+```sql
+INSERT INTO students
+    (student_id, student_name, city, course, marks, email)
+VALUES
+    (107, 'Priya', 'Pune', 'Data Science', 82, NULL);
+```
+
+**Explanation:**
+- `NULL` represents a missing, unknown, or unavailable value.
+- It is different from an empty string (`''`) or the text `'NULL'`.
+- The email column must allow `NULL` values for this query to work.
+
+**Outcome:** Inserted a student record without an email address.
+
+### 3. UPDATE Command – Modifying Existing Data
+
+**Task:** Update the city of student 103 from Chennai to Hyderabad.
 
 ```sql
 UPDATE students
@@ -131,48 +70,58 @@ SET city = 'Hyderabad'
 WHERE student_id = 103;
 ```
 
-**Outcome:** Updated the city for student 103 without changing other student records.
+**Explanation:**
+- `UPDATE students` specifies the table to modify.
+- `SET city = 'Hyderabad'` assigns the new city.
+- `WHERE student_id = 103` ensures that only the record for student 103 is updated.
 
-### Task 8: Verify the Records
+**Outcome:** Changed student 103's city from Chennai to Hyderabad without modifying other student records.
 
-Used the `SELECT` command to display the table records and verify the changes.
+### 4. DELETE Command – Removing Records Based on a Condition
+
+**Task:** Delete all student records where marks are below 40.
+
+```sql
+DELETE FROM students
+WHERE marks < 40;
+```
+
+**Explanation:**
+- `DELETE FROM students` specifies the table from which records will be removed.
+- `WHERE marks < 40` identifies records with marks below 40.
+- Only records satisfying the condition are deleted.
+
+**Outcome:** Removed records for students who scored below 40, such as Ravi with 35 marks and Karan with 29 marks, provided those records were still present.
+
+**Important:** Always verify the condition before executing a `DELETE` statement. Without a `WHERE` clause, all records in the table may be deleted.
+
+### 5. SELECT Command – Verifying the Changes
+
+**Task:** Display all student records after performing the DML operations.
 
 ```sql
 SELECT * FROM students;
 ```
 
-**Outcome:** Displayed the records currently stored in the table.
+**Explanation:**
+- `SELECT` retrieves data from a database table.
+- `*` selects all columns.
+- The query helps verify inserted records and updated values and check which records remain after deletion.
 
-### Task 9: Truncate the Table
+**Outcome:** Retrieved the current student records to verify the results of the data manipulation operations.
 
-**Requirement:** Remove all rows while keeping the table structure.
+## 📖 Key Learnings
 
-```sql
-TRUNCATE TABLE students;
-```
+- Learned to insert single or multiple records into a table.
+- Practised inserting `NULL` values into a column.
+- Updated existing records using the `UPDATE` command.
+- Used the `WHERE` clause to target specific records.
+- Deleted records based on a condition using `DELETE`.
+- Verified data changes using `SELECT`.
+- Understood the importance of checking conditions before updating or deleting records.
 
-**Outcome:** Removed all records from the table while retaining its columns and structure.
+## ✅ Conclusion
 
-### Task 10: Drop the Table
+This lab provided hands-on experience with SQL DML commands for managing records in a relational database. I practised inserting new student details, handling missing email values, updating city information, deleting records based on marks, and verifying the resulting data.
 
-**Requirement:** Remove the entire `students` table, including its structure and data.
-
-```sql
-DROP TABLE students;
-```
-
-**Outcome:** Deleted the table from the database. The table no longer exists.
-
-## 📚 Key Learnings
-- Used `CREATE TABLE` to create a database table.
-- Used `ALTER TABLE` to add, remove, rename, and modify columns.
-- Used `RENAME TABLE` to rename a table.
-- Used `INSERT` to add new records.
-- Used `UPDATE` with `WHERE` to modify a specific record.
-- Used `SELECT` to verify table data.
-- Understood `TRUNCATE` and `DROP` and their effects on database tables.
-
-## 📝 Conclusion
-This lab provided hands-on experience with SQL table creation, table modification, and data manipulation. I practised DDL commands for changing table structures and also used DML commands to insert and update records.
-
-These tasks helped me understand how SQL manages both database structure and stored data.
+These operations are essential for maintaining accurate and consistent data in database applications.
